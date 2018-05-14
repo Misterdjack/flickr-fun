@@ -6,7 +6,8 @@ import RootNavigation from './navigation/RootNavigation';
 
 // Redux
 import {Provider} from 'react-redux'
-import store from './store/store'
+import { PersistGate } from 'redux-persist/integration/react'
+import {store, persistor} from './store/store'
 
 
 
@@ -27,10 +28,12 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <RootNavigation />
-          </View>
+          <PersistGate loading={null} persistor={persistor}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <RootNavigation />
+            </View>
+          </PersistGate>
         </Provider>
       );
     }
