@@ -8,7 +8,7 @@ export const UPDATE_RESULTS = 'UPDATE_RESULTS'
 
 export const updateSearchResults = (picUrls) => dispatch => ({
   type: UPDATE_RESULTS,
-  payload: picUrls,
+  data: picUrls,
 })
 
 // export const updateSearchResults = (picIds) => async dispatch => {

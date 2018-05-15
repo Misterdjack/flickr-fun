@@ -2,7 +2,7 @@
 import {UPDATE_RESULTS} from '../actions/actions'
 
 const reducer = (state = [], action) => {
-  if (action.type === UPDATE_RESULTS) return [...state, action.payload]
+  if (action.type === UPDATE_RESULTS) return [...state, action.data]
   return state
 }
 

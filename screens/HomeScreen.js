@@ -8,11 +8,15 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
+  navigator,
+  Dimensions
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Lightbox from 'react-native-lightbox';
 
 import { flickrKey, flickrSecret } from '../config';
 import {updateSearchResults} from '../actions/actions'
@@ -32,6 +36,8 @@ export class HomeScreen extends React.Component {
       };
       this._search = this._search.bind(this);
       this._getSearchResults = this._getSearchResults.bind(this);
+      this._renderPics = this._renderPics.bind(this);
+
   }
 
 
@@ -63,25 +69,44 @@ export class HomeScreen extends React.Component {
     // Send picUrls to Actions
     this.props.updateSearchResults(this.state.picUrls)
 
+    this._renderPics(this.props.picUrls)
+
   }
 //
   _renderPics(picUrls) {
-    return picUrls.map((item, index) => {
-      return (
-        <View key={index} style={styles.picture}>
-          {item ? (
-            <Image
-              source={{ uri: item }}
-              style={{ width: 75, height: 75, resizeMode: "cover" }}
-            />
-          ) : (
-            <View
-              style={{ width: 75, height: 75, backgroundColor: "#D3D3D3" }}
-            />
-          )}
-        </View>
-      )
-    });
+    // Getting the width and the height of the phone
+  // const { height, width} = Dimensions.get('window');
+
+  // The lightbox image style. The resizeMode contain will automatically control the size
+  // according to the original image format. height is a short for height: height in es6
+  const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
+
+    // if (this.state.picUrls !== undefined) {
+    try {
+      return picUrls.map((item, index) => {
+        return (
+            <Lightbox key={index} style={styles.picture} activeProps={activeProps} navigator={navigator} underlayColor="white">
+            {item ? (
+              <Image
+                source={{ uri: item }}
+                style={{ height: 75, width: 75, resizeMode: "cover" }}
+                // style={{flex:1, height: undefined, width: undefined}}
+                // resizeMode="contain"
+              />
+            ) : (
+              <View
+                style={{ width: 75, height: 75, backgroundColor: "#D3D3D3" }}
+              />
+            )}
+          </Lightbox>
+        )
+      });
+    } catch (e) {
+
+    }
+    // } else {
+    //   alert('Search Pics')
+    // }
   }
 
   handleSearchUpdate = searchValue => {
@@ -111,55 +136,8 @@ export class HomeScreen extends React.Component {
 
 
           <View style={styles.pictureContainer}>
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
-              <View
-                style={styles.picture}
-              />
--          </View>
+              {this._renderPics(this.state.picUrls)}
+          </View>
 
         </ScrollView>
       </View>
@@ -175,7 +153,9 @@ export class HomeScreen extends React.Component {
 };
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    picUrls: state.picUrls
+  }
 };
 
 
@@ -257,6 +237,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   picture: {
+    alignItems: 'center',
     width: 75,
     height: 75,
     backgroundColor: "#D3D3D3",
