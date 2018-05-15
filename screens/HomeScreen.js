@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 import { connect } from 'react-redux';
 import axios from 'axios';
-// import PropTypes from 'prop-types'
 
 import { flickrKey, flickrSecret } from '../config';
 import {updateSearchResults} from '../actions/actions'
@@ -24,27 +23,70 @@ export class HomeScreen extends React.Component {
     header: null,
   }
 
-  // static propTypes = {
-  //   updateSearchResults: PropTypes.func
-  // }
-  //
-  // state = {
-  //   seachValue: ''
-  // }
-
   constructor(props) {
     super(props);
       this.state = {
-        seachValue: ''
+            searchValue: '',
+            picIds: undefined,
+            picUrls: undefined
       };
       this._search = this._search.bind(this);
+      this._getSearchResults = this._getSearchResults.bind(this);
+  }
+
+
+
+  _getSearchResults = async () => {
+    let response = await axios.get(
+      `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
+        flickrKey
+      }&tags=${this.state.searchValue}&format=json&nojsoncallback=1`
+    )
+    return response;
   }
 
   _search = async () => {
-    this.props.updateSearchResults(this.state.seachValue)
+    let response = await this._getSearchResults();
+
+    this.setState ({ picIds: response.data.photos.photo })
+    // console.log(this.state.picIds);
+
+    // Transform for picture request urls array
+    let results = this.state.picIds.map((item, index) => {
+      return (
+        `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_n.jpg`
+      )
+    });
+    this.setState ({ picUrls: results })
+    console.log(this.state.picUrls);
+
+    // Send picUrls to Actions
+    this.props.updateSearchResults(this.state.picUrls)
+
+  }
+//
+  _renderPics(picUrls) {
+    return picUrls.map((item, index) => {
+      return (
+        <View key={index} style={styles.picture}>
+          {item ? (
+            <Image
+              source={{ uri: item }}
+              style={{ width: 75, height: 75, resizeMode: "cover" }}
+            />
+          ) : (
+            <View
+              style={{ width: 75, height: 75, backgroundColor: "#D3D3D3" }}
+            />
+          )}
+        </View>
+      )
+    });
   }
 
-
+  handleSearchUpdate = searchValue => {
+    this.setState({searchValue})
+  }
 
   render() {
     return (
@@ -58,20 +100,67 @@ export class HomeScreen extends React.Component {
               placeholder="Search"
               placeholderTextColor={styles.codeHighlightText}
               returnKeyType="search"
-              value={this.state.seachValue}
-              onChangeText={text => this.setState({ seachValue: text })}
-              onSubmitEditing={this._search}
+              value={this.state.searchValue}
+              onChangeText={this.handleSearchUpdate}
+              onSubmitEditing={this._search.bind(this)}
             />
-            {/* <Button
-              style={[styles.button]}
-              // onPress={this._search.bind(this)}
-              title="Search"
-              color="#ed2024"
-            /> */}
-            <TouchableOpacity onPress={this._search} style={styles.searchButton}>
+            <TouchableOpacity onPress={this._search.bind(this)} style={styles.searchButton}>
               <Text style={styles.helpLinkText}>Search</Text>
             </TouchableOpacity>
           </View>
+
+
+          <View style={styles.pictureContainer}>
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+              <View
+                style={styles.picture}
+              />
+-          </View>
+
         </ScrollView>
       </View>
     );
@@ -86,10 +175,9 @@ export class HomeScreen extends React.Component {
 };
 
 const mapStateToProps = state => {
-  return {
-    search: state.search
-  };
+  return state;
 };
+
 
 export default connect(mapStateToProps, {updateSearchResults})(
   HomeScreen
@@ -149,11 +237,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'center',
   },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+  pictureContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
     ...Platform.select({
       ios: {
         shadowColor: 'black',
@@ -162,12 +250,18 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
       },
       android: {
-        elevation: 20,
+        elevation: 2,
       },
     }),
-    alignItems: 'center',
     backgroundColor: '#fbfbfb',
     paddingVertical: 20,
+  },
+  picture: {
+    width: 75,
+    height: 75,
+    backgroundColor: "#D3D3D3",
+    paddingHorizontal: 10,
+    margin: 10
   },
   tabBarInfoText: {
     fontSize: 17,
