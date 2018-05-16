@@ -6,10 +6,12 @@ export const UPDATE_RESULTS = 'UPDATE_RESULTS'
 // export const RESULTS_ERROR = 'RESULTS_ERROR'
 
 
-export const updateSearchResults = (picUrls) => dispatch => ({
-  type: UPDATE_RESULTS,
-  data: picUrls,
-})
+export const updateSearchResults = picUrls => dispatch => {
+  dispatch({
+    type: UPDATE_RESULTS,
+    data: picUrls
+  })
+}
 
 // export const updateSearchResults = (picIds) => async dispatch => {
 //   dispatch({type: FETCHING_PICS})

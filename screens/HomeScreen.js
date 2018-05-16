@@ -32,11 +32,11 @@ export class HomeScreen extends React.Component {
       this.state = {
             searchValue: '',
             picIds: undefined,
-            picUrls: undefined
+            picUrls: []
       };
-      this._search = this._search.bind(this);
-      this._getSearchResults = this._getSearchResults.bind(this);
-      this._renderPics = this._renderPics.bind(this);
+      // this._search = this._search.bind(this);
+      // this._getSearchResults = this._getSearchResults.bind(this);
+      // this._renderPics = this._renderPics.bind(this);
 
   }
 
@@ -74,11 +74,7 @@ export class HomeScreen extends React.Component {
   }
 //
   _renderPics(picUrls) {
-    // Getting the width and the height of the phone
   // const { height, width} = Dimensions.get('window');
-
-  // The lightbox image style. The resizeMode contain will automatically control the size
-  // according to the original image format. height is a short for height: height in es6
   const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
 
     // if (this.state.picUrls !== undefined) {
@@ -102,7 +98,7 @@ export class HomeScreen extends React.Component {
         )
       });
     } catch (e) {
-
+      console.log(e);
     }
     // } else {
     //   alert('Search Pics')
@@ -127,9 +123,9 @@ export class HomeScreen extends React.Component {
               returnKeyType="search"
               value={this.state.searchValue}
               onChangeText={this.handleSearchUpdate}
-              onSubmitEditing={this._search.bind(this)}
+              onSubmitEditing={this._search}
             />
-            <TouchableOpacity onPress={this._search.bind(this)} style={styles.searchButton}>
+            <TouchableOpacity onPress={this._search} style={styles.searchButton}>
               <Text style={styles.helpLinkText}>Search</Text>
             </TouchableOpacity>
           </View>
@@ -155,7 +151,7 @@ export class HomeScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     picUrls: state.picUrls
-  }
+    }
 };
 
 
