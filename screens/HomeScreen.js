@@ -34,9 +34,9 @@ export class HomeScreen extends React.Component {
             picIds: undefined,
             picUrls: []
       };
-      // this._search = this._search.bind(this);
-      // this._getSearchResults = this._getSearchResults.bind(this);
-      // this._renderPics = this._renderPics.bind(this);
+      this._search = this._search.bind(this);
+      this._getSearchResults = this._getSearchResults.bind(this);
+      this._renderPics = this._renderPics.bind(this);
 
   }
 
@@ -64,12 +64,12 @@ export class HomeScreen extends React.Component {
       )
     });
     this.setState ({ picUrls: results })
-    console.log(this.state.picUrls);
+    // console.log(this.state.picUrls);
 
     // Send picUrls to Actions
     this.props.updateSearchResults(this.state.picUrls)
 
-    this._renderPics(this.props.picUrls)
+    this._renderPics(this.state.picUrls)
 
   }
 //
@@ -77,8 +77,8 @@ export class HomeScreen extends React.Component {
   // const { height, width} = Dimensions.get('window');
   const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
 
-    // if (this.state.picUrls !== undefined) {
-    try {
+    // try {
+    if (picUrls !== undefined) {
       return picUrls.map((item, index) => {
         return (
             <Lightbox key={index} style={styles.picture} activeProps={activeProps} navigator={navigator} underlayColor="white">
@@ -97,12 +97,12 @@ export class HomeScreen extends React.Component {
           </Lightbox>
         )
       });
-    } catch (e) {
-      console.log(e);
-    }
-    // } else {
-    //   alert('Search Pics')
+    // } catch (e) {
+    //   console.log(e);
     // }
+    } else {
+      // alert('Search Pics')
+    }
   }
 
   handleSearchUpdate = searchValue => {

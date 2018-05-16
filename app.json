@@ -21,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "co.alius.flickrFun"
+    },
+    "android": {
+      "package": "co.alius.flickrFun"
     }
   }
 }
