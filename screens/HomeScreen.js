@@ -35,7 +35,7 @@ export class HomeScreen extends React.Component {
             picUrls: []
       };
       this._search = this._search.bind(this);
-      this._getSearchResults = this._getSearchResults.bind(this);
+      this._updateSearchResults = this._updateSearchResults.bind(this);
       this._renderPics = this._renderPics.bind(this);
 
   }
@@ -132,7 +132,7 @@ export class HomeScreen extends React.Component {
 
 
           <View style={styles.pictureContainer}>
-              {this._renderPics(this.state.picUrls)}
+              {this._renderPics(this.props.picUrls)}
           </View>
 
         </ScrollView>
