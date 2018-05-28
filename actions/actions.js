@@ -9,7 +9,7 @@ export const UPDATE_RESULTS = 'UPDATE_RESULTS'
 export const updateSearchResults = picUrls => dispatch => {
   dispatch({
     type: UPDATE_RESULTS,
-    data: picUrls
+    payload: picUrls
   })
 }
 
@@ -18,10 +18,10 @@ export const updateSearchResults = picUrls => dispatch => {
 //   try {
 //     const search = await getSearchResults(picIds)
 //     console.log(search);
-//     dispatch({type: UPDATE_RESULTS, data: search})
+//     dispatch({type: UPDATE_RESULTS, payload: search})
 //   } catch (error) {
 //     console.log(error);
-//     dispatch({type: RESULTS_ERROR, data: error.message})
+//     dispatch({type: RESULTS_ERROR, payload: error.message})
 //   }
 // }
 
