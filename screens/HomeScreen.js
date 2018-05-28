@@ -34,7 +34,6 @@ export class HomeScreen extends React.Component {
             picIds: undefined,
             picUrls: []
       };
-      this._updateSearchResults = this._updateSearchResults.bind(this);
 
   }
 
@@ -52,7 +51,7 @@ export class HomeScreen extends React.Component {
   _search = async () => {
     let response = await this._getSearchResults();
 
-    this.setState ({ picIds: response.payload.photos.photo })
+    this.setState ({ picIds: response.data.photos.photo })
     // console.log(this.state.picIds);
 
     // Transform for picture request urls array
@@ -62,14 +61,13 @@ export class HomeScreen extends React.Component {
       )
     });
     this.setState ({ picUrls: results })
-    // console.log(this.state.picUrls);
+    console.log(this.state.picUrls);
 
     // Send picUrls to Actions
     this.props.updateSearchResults(this.state.picUrls)
 
     this._renderPics(this.state.picUrls)
 
-    console.log(store.getState());
 
   }
 //
@@ -132,7 +130,7 @@ export class HomeScreen extends React.Component {
 
 
           <View style={styles.pictureContainer}>
-              {this._renderPics(this.props.picUrls)}
+              {this._renderPics(this.state.picUrls)}
           </View>
 
         </ScrollView>
