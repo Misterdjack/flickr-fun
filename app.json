@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "flickr-fun",
-    "description": "upThere Coding challenge",
+    "description": "A fun sample project using React Native/Redux",
     "slug": "flickr-fun",
     "privacy": "public",
     "sdkVersion": "27.0.0",
