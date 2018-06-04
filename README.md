@@ -1,4 +1,4 @@
-# flickr-fun
+# Flickr Funhouse
 
 quick project for redux coding challenge
 

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "flickr-fun",
+    "name": "Flickr Funhouse",
     "description": "A fun sample project using React Native/Redux",
     "slug": "flickr-fun",
     "privacy": "public",

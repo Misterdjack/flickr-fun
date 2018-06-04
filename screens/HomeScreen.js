@@ -10,7 +10,8 @@ import {
   View,
   Alert,
   navigator,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
@@ -36,7 +37,9 @@ export class HomeScreen extends React.Component {
 
   }
 
-  _search = async () => {
+  _search = async (searchValue) => {
+    this.setState({searchValue})
+    console.log(this.state.searchValue);
     // Dispatch searchValue to Actions
     this.props.updateSearchResults(this.state.searchValue)
 
@@ -70,24 +73,25 @@ export class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Ionicons style={styles.searchIcon} name="md-search" size={32}/>
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="Search"
-              placeholderTextColor={styles.codeHighlightText}
-              returnKeyType="search"
-              value={this.state.searchValue}
-              onChangeText={this.handleSearchUpdate}
-              onSubmitEditing={this._search}
-            />
-            <TouchableOpacity onPress={this._search} style={styles.searchButton}>
-              <Text style={styles.helpLinkText}>Search</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.welcomeContainer}>
+          <Ionicons style={styles.searchIcon} name="md-search" size={32}/>
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Search"
+            placeholderTextColor={styles.codeHighlightText}
+            returnKeyType="search"
+            onChangeText={this._search}
+            onSubmitEditing={this._search}
+          />
+          <TouchableOpacity onPress={this._search} style={styles.searchButton}>
+            <Text style={styles.helpLinkText}>Search</Text>
+          </TouchableOpacity>
+        </View>
 
+        {/* <ActivityIndicator size="large" color="rgba(96,100,109, 1)" /> */}
+
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
           <View style={styles.pictureContainer}>
               {this._renderPics(this.props.picUrls)}
@@ -123,16 +127,14 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  contentContainer: {
-    paddingTop: 30,
-  },
+
   welcomeContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'stretch',
+    // alignItems: 'center',
     justifyContent: 'center',
-    margin: 20,
-    height: 40
+    maxHeight: 45,
+    margin: 25
   },
   searchIcon: {
     paddingHorizontal: 10
