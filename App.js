@@ -7,7 +7,7 @@ import RootNavigation from './navigation/RootNavigation';
 // Redux
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import {store, persistor} from './store/store'
+import {store, persistor, persistedReducer} from './store/store'
 
 
 

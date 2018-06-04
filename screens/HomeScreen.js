@@ -31,82 +31,40 @@ export class HomeScreen extends React.Component {
     super(props);
       this.state = {
             searchValue: '',
-            picIds: undefined,
-            picUrls: []
+            picUrls: undefined,
       };
-      this._updateSearchResults = this._updateSearchResults.bind(this);
 
-  }
-
-
-
-  _getSearchResults = async () => {
-    let response = await axios.get(
-      `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
-        flickrKey
-      }&tags=${this.state.searchValue}&format=json&nojsoncallback=1`
-    )
-    return response;
   }
 
   _search = async () => {
-    let response = await this._getSearchResults();
+    // Dispatch searchValue to Actions
+    this.props.updateSearchResults(this.state.searchValue)
 
-    this.setState ({ picIds: response.payload.photos.photo })
-    // console.log(this.state.picIds);
-
-    // Transform for picture request urls array
-    let results = this.state.picIds.map((item, index) => {
-      return (
-        `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_n.jpg`
-      )
-    });
-    this.setState ({ picUrls: results })
-    // console.log(this.state.picUrls);
-
-    // Send picUrls to Actions
-    this.props.updateSearchResults(this.state.picUrls)
-
-    this._renderPics(this.state.picUrls)
-
-    console.log(store.getState());
-
-  }
-//
-  _renderPics(picUrls) {
-  // const { height, width} = Dimensions.get('window');
-  const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
-
-    // try {
-    if (picUrls !== undefined) {
-      return picUrls.map((item, index) => {
-        return (
-            <Lightbox key={index} style={styles.picture} activeProps={activeProps} navigator={navigator} underlayColor="white">
-            {item ? (
-              <Image
-                source={{ uri: item }}
-                style={{ height: 75, width: 75, resizeMode: "cover" }}
-                // style={{flex:1, height: undefined, width: undefined}}
-                // resizeMode="contain"
-              />
-            ) : (
-              <View
-                style={{ width: 75, height: 75, backgroundColor: "#D3D3D3" }}
-              />
-            )}
-          </Lightbox>
-        )
-      });
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    } else {
-      // alert('Search Pics')
-    }
   }
 
   handleSearchUpdate = searchValue => {
     this.setState({searchValue})
+  }
+
+  _renderPics(picUrls) {
+    const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
+
+    return picUrls.map((item, index) => {
+      return (
+          <Lightbox key={index} style={styles.picture} activeProps={activeProps} navigator={navigator} underlayColor="white">
+          {item ? (
+            <Image
+              source={{ uri: item }}
+              style={{ height: 75, width: 75, resizeMode: "cover" }}
+            />
+          ) : (
+            <View
+              style={{ width: 75, height: 75, backgroundColor: "#D3D3D3" }}
+            />
+          )}
+        </Lightbox>
+      )
+    });
   }
 
   render() {
@@ -139,12 +97,6 @@ export class HomeScreen extends React.Component {
       </View>
     );
   }
-
-  // _search = () => {};
-
-  // _handleLearnMorePress = () => {
-  //   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  // };
 
 };
 
