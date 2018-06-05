@@ -18,10 +18,10 @@ export const updateSearchResults = (searchValue) => async dispatch => {
         `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_n.jpg`
       )
     });
-    // console.log(picUrls);
+    console.log(picUrls);
     dispatch({type: UPDATE_RESULTS, payload: picUrls})
   } catch (error) {
-    // console.log(error);
-    dispatch({type: RESULTS_ERROR, payload: error.message})
+    console.log(error);
+    dispatch({type: RESULTS_ERROR, error: true})
   }
 }

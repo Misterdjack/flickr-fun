@@ -31,8 +31,7 @@ export class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
-            searchValue: '',
-            picUrls: undefined,
+            searchValue: ''
       };
 
   }
@@ -45,9 +44,9 @@ export class HomeScreen extends React.Component {
 
   }
 
-  handleSearchUpdate = searchValue => {
-    this.setState({searchValue})
-  }
+  // handleSearchUpdate = searchValue => {
+  //   this.setState({searchValue})
+  // }
 
   _renderPics(picUrls) {
     const activeProps = { resizeMode: 'contain', width: 300, height: 300 };
@@ -80,7 +79,7 @@ export class HomeScreen extends React.Component {
             underlineColorAndroid="transparent"
             placeholder="Search"
             placeholderTextColor={styles.codeHighlightText}
-            returnKeyType="search"
+            returnKeyType="done"
             onChangeText={this._search}
             onSubmitEditing={this._search}
           />
@@ -89,7 +88,21 @@ export class HomeScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
-        {/* <ActivityIndicator size="large" color="rgba(96,100,109, 1)" /> */}
+          {/* Loading */}
+          {this.props.loading ? (
+            <ActivityIndicator
+              size="large"
+              color="#2f95dc"
+              style={{
+                margin: 10
+              }}
+            />
+          ) : null}
+
+          {/* Error Message */}
+          {this.props.error ? (
+            <Text style={styles.error}>Nothing</Text>
+          ) : null}
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
@@ -98,6 +111,7 @@ export class HomeScreen extends React.Component {
           </View>
 
         </ScrollView>
+
       </View>
     );
   }
@@ -106,6 +120,8 @@ export class HomeScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    loading: state.loading,
+    error: state.error,
     picUrls: state.picUrls
     }
 };
@@ -161,7 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 4,
   },
-  getStartedText: {
+  error: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
