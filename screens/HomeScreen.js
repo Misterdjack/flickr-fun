@@ -100,8 +100,8 @@ export class HomeScreen extends React.Component {
           ) : null}
 
           {/* Error Message */}
-          {this.props.error ? (
-            <Text style={styles.error}>Nothing</Text>
+          {(this.props.error || !Array.isArray(this.props.picUrls) || !this.props.picUrls.length) ? (
+            <Text style={styles.error}>You search for "{this.state.searchValue}" returned zero results</Text>
           ) : null}
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
