@@ -4,7 +4,7 @@
     "description": "A fun sample project using React Native/Redux",
     "slug": "flickr-fun",
     "privacy": "public",
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.3",
     "orientation": "portrait",
