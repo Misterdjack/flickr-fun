@@ -10,18 +10,18 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
-    "expo": "^27.0.1",
+    "expo": "^30.0.0",
     "prop-types": "^15.6.1",
     "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-lightbox": "^0.7.0",
-    "react-navigation": "2.0.0",
+    "react-navigation": "2.13.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "jest-expo": "^27.0.0"
+    "jest-expo": "^30.0.0"
   }
 }
