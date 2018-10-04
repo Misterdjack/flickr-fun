@@ -104,13 +104,16 @@ export class HomeScreen extends React.Component {
             <Text style={styles.error}>Your search <Text style={{color: 'red'}}>{this.state.searchValue} </Text>returned zero results</Text>
           ) : null}
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          {/* Pics */}
+          {this.props.picUrls ? (
+                    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          <View style={styles.pictureContainer}>
-              {this._renderPics(this.props.picUrls)}
-          </View>
-
-        </ScrollView>
+                    <View style={styles.pictureContainer}>
+                        {this._renderPics(this.props.picUrls)}
+                    </View>
+          
+                  </ScrollView>
+          ) : null}
 
       </View>
     );
