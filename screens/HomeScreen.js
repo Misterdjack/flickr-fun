@@ -106,13 +106,13 @@ export class HomeScreen extends React.Component {
 
           {/* Pics */}
           {this.props.picUrls ? (
-                    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-                    <View style={styles.pictureContainer}>
-                        {this._renderPics(this.props.picUrls)}
-                    </View>
-          
-                  </ScrollView>
+            <View style={styles.pictureContainer}>
+                {this._renderPics(this.props.picUrls)}
+            </View>
+  
+          </ScrollView>
           ) : null}
 
       </View>
